@@ -33,6 +33,7 @@ pipeline {
                     cleanWs()
                     // 3. How would you clone a repository with a specific branch name and linked submodules? using a method called cloneRepo.
                     cloneRepo branch: ${branch_name} url ${repo_path}
+                    
             }
         }
         
@@ -40,7 +41,7 @@ pipeline {
             steps {
                 script {
                     // 4. How would you create a folder called build_Output to store .hex files there (in workspace)? (optional)
-                    mkdir -p build_Output
+                    sh 'mkdir -p build_Output'
                 }
             }
         }
