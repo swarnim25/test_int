@@ -7,6 +7,7 @@
 // Clean the build before the build starts.
 
 pipeline {
+    agent any
     parameters {
         string(name: 'project_name', defaultValue: 'test_pipeline', trim: true)
         string(name: 'repo_path', defaultValue: 'https://github.com/swarnim25/test_int.git', trim: true)
@@ -15,9 +16,9 @@ pipeline {
         // 1. How would you add a parameter to schedule the pipeline? (Optional)
         string(name: 'cron_schedule', defaultValue: 'H/5 * * * *',  trim: true)
     }
-    triggers {
+    /*triggers {
         
-    }
+    }*/
     options {
         timestamps()
     }
@@ -46,14 +47,14 @@ pipeline {
             }
         }
 
-        stage('Build Version') { 
+        /*stage('Build Version') { 
             steps {
                 script {
                     // 5. How would you set a version number that starts with v.1.0.0_ and uses the latest build number?
                     // 6. How would you change the version number of the build to the new version? (optional)
                 }                  
             }
-        }
+        }*/
         
         stage('Build Code') { 
             steps {
@@ -74,11 +75,11 @@ pipeline {
             }
         }
        
-        stage('Archiving Artifacts') {
+        /*stage('Archiving Artifacts') {
             steps {
                     // 10. How would you archive the zip file?
             }
-        }
+        }*/
     }
     post {
         always {
