@@ -32,7 +32,7 @@ pipeline {
                     // 2. How would you clean the workspace before the build starts?
                     cleanWs()
                     // 3. How would you clone a repository with a specific branch name and linked submodules? using a method called cloneRepo.
-                    cloneRepo branch: ${branch_name} url: "${repo_path}"
+                    cloneRepo branch: ${branch_name} url: ${repo_path}
             }
         }
         
