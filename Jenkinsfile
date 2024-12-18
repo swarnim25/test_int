@@ -26,6 +26,7 @@ pipeline {
     environment {
         // Credentials
         github_id = "GitHub_token"
+        VERSION = "v.1.0.0_${env.BUILD_NUMBER}"
     }
     stages {
         stage('SCM Checkout Stage') { 
@@ -49,14 +50,15 @@ pipeline {
             }
         }
 
-        /*stage('Build Version') { 
+        stage('Build Version') { 
             steps {
                 script {
                     // 5. How would you set a version number that starts with v.1.0.0_ and uses the latest build number?
+                    echo "${VERSION}"
                     // 6. How would you change the version number of the build to the new version? (optional)
                 }                  
             }
-        }*/
+        }
         
         stage('Build Code') { 
             steps {
