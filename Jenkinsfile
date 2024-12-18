@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     // 7. How would you create a build directory and compile the C files using batch commands?
-                    sh 'usr/bin/gcc -o build_Output main.c math_operations.c'
+                    sh '/usr/bin/gcc -o build_Output main.c math_operations.c'
                 }
             }
         }
