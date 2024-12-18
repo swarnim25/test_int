@@ -75,7 +75,7 @@ pipeline {
                     // 8. How would you collect the hex file and store it in the folder created earlier?
                     // --> answered in ques 7
                     // 9. How would you zip the folder that contains the hex file?
-                    sh 'gzip build_Output'
+                    sh 'tar -cvzf build_Output.gz build_Output'
                 }
             }
         }
@@ -83,7 +83,7 @@ pipeline {
         stage('Archiving Artifacts') {
             steps {
                     // 10. How would you archive the zip file?
-                    sh 'unzip build_Output.zip'
+                    sh 'zip -r build_Output.zip build_Output'
             }
         }
     }
