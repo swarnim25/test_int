@@ -22,7 +22,7 @@ pipeline {
                     sh 'mkdir -p ${BUILD_DIR}'
                     
                     // Compile .c files using gcc (or any other C compiler)
-                    sh 'gcc -o ${BUILD_DIR}/output_program *.c'
+                    sh '/usr/bin/gcc main.c math_operations.c -o my_program'
 
                     // Optional: If there are multiple .c files, you can compile each separately
                     // sh 'gcc -c file1.c -o ${BUILD_DIR}/file1.o'
