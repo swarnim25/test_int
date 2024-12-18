@@ -32,7 +32,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        /*stage('Deploy') {
             steps {
                 script {
                     // Deploy the compiled binary and header files to a remote server or system
@@ -45,7 +45,7 @@ pipeline {
                     //sh 'scp *.h user@remote-server:${DEPLOY_DIR}'
                 }
             }
-        }
+        }*/
     }
 
     post {
