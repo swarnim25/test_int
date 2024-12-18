@@ -92,6 +92,10 @@ pipeline {
                 // 11. How would you print out the list of submodules and the last commit?
                 sh 'pwd'
                 sh 'ls -ltrah'
+                // List submodules and their last commit
+                sh '''
+                git submodule foreach 'echo "Submodule: $name" && git log -1 --oneline'
+                '''
         } 
     }
 
