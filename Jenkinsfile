@@ -83,7 +83,7 @@ pipeline {
         stage('Archiving Artifacts') {
             steps {
                     // 10. How would you archive the zip file?
-                    sh 'zip -r build_Output.zip build_Output'
+                    archiveArtifacts artifacts: 'build_Output.gz', fingerprint: true
             }
         }
     }
