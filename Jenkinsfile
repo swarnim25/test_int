@@ -17,8 +17,9 @@ pipeline {
         string(name: 'cron_schedule', defaultValue: 'H/5 * * * *',  trim: true)
     }
     /*triggers {
-        
-    }*/
+        Currently disabled as there is no value
+    }*/  
+   
     options {
         timestamps()
     }
@@ -34,7 +35,7 @@ pipeline {
                     cleanWs()
                     // 3. How would you clone a repository with a specific branch name and linked submodules? using a method called cloneRepo.
                     //cloneRepo branch: ${branch_name} url ${repo_path}
-                    git clone "https://github.com/swarnim25/test_int.git"
+                    git "https://github.com/swarnim25/test_int.git"
                     
             }
         }
@@ -70,17 +71,19 @@ pipeline {
             steps {
                 script {
                     // 8. How would you collect the hex file and store it in the folder created earlier?
+                    // --> answered in ques 7
                     // 9. How would you zip the folder that contains the hex file?
-                    sh 'gzip /build_Output hex.zip'
+                    sh 'gzip build_Output'
                 }
             }
         }
        
-        /*stage('Archiving Artifacts') {
+        stage('Archiving Artifacts') {
             steps {
                     // 10. How would you archive the zip file?
+                    sh 'unzip build_Output.zip'
             }
-        }*/
+        }
     }
     post {
         always {
