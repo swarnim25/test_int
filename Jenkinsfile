@@ -1,64 +1,91 @@
+// This is an interview question. 
+// The candidate is asked to clone a repository, create a build version, build the code, 
+// and archive the artifacts and print out the list of submodules, last commit.
+// The candidate is also asked to create a method that collects files and a method to clone a repository 
+// with a specific branch name and linked submodules.
+// The candidate is asked to parameterize the schedule of the pipeline.
+// Clean the build before the build starts.
+
 pipeline {
-    agent any  // Jenkins will run this pipeline on any available agent
-
+    parameters {
+        string(name: 'project_name', defaultValue: 'test_pipeline', trim: true)
+        string(name: 'repo_path', defaultValue: 'https://github.com/swarnim25/test_int.git', trim: true)
+        string(name: 'branch_name', defaultValue: 'test', trim: true)
+        string(name: 'repo_name', defaultValue: 'test_int', trim: true)
+        // 1. How would you add a parameter to schedule the pipeline? (Optional)
+        string(name: 'cron_schedule', defaultValue: 'H/5 * * * *',  trim: true)
+    }
+    triggers {
+        
+    }
+    options {
+        timestamps()
+    }
     environment {
-        // Define environment variables if needed (e.g., deployment paths, compiler options)
-        //DEPLOY_DIR = "/"  // Change to your deployment directory
-        BUILD_DIR = "build"  // Folder to store compiled files
+        // Credentials
+        github_id = "GitHub_token"
     }
-
     stages {
-        stage('Checkout') {
+        stage('SCM Checkout Stage') { 
+            
             steps {
-                // Checkout the Git repository to get the .c and .h files
-                git 'https://github.com/swarnim25/test_int'
+                    // 2. How would you clean the workspace before the build starts?
+                    cleanWs()
+                    // 3. How would you clone a repository with a specific branch name and linked submodules? using a method called cloneRepo.
+                    cloneRepo branch: ${branch_name} url: "${repo_path}"
             }
         }
-
-        stage('Build') {
+        
+        stage('Prepare Environment') {
             steps {
                 script {
-                    // Create a build directory if it doesn't exist
-                    //sh 'mkdir -p ${BUILD_DIR}'
-                    
-                    // Compile .c files using gcc (or any other C compiler)
-                    sh '/usr/bin/gcc main.c math_operations.c -o my_program'
-                    sh './my_program'
-                    // Optional: If there are multiple .c files, you can compile each separately
-                    // sh 'gcc -c file1.c -o ${BUILD_DIR}/file1.o'
-                    // sh 'gcc -c file2.c -o ${BUILD_DIR}/file2.o'
-                    // sh 'gcc -o ${BUILD_DIR}/output_program ${BUILD_DIR}/*.o'
+                    // 4. How would you create a folder called build_Output to store .hex files there (in workspace)? (optional)
+                    mkdir -p build_Output
                 }
             }
         }
 
-        /*stage('Deploy') {
+        stage('Build Version') { 
             steps {
                 script {
-                    // Deploy the compiled binary and header files to a remote server or system
-                    // You can use SCP, FTP, or any custom deployment process.
-                    
-                    // For example, SCP to a remote server:
-                    //sh 'scp ${BUILD_DIR}/swarnimchandel@remote-server:${DEPLOY_DIR}'
-                    
-                    // Optionally, deploy the header files (.h) or other resources as needed:
-                    //sh 'scp *.h user@remote-server:${DEPLOY_DIR}'
+                    // 5. How would you set a version number that starts with v.1.0.0_ and uses the latest build number?
+                    // 6. How would you change the version number of the build to the new version? (optional)
+                }                  
+            }
+        }
+        
+        stage('Build Code') { 
+            steps {
+                script {
+                    // 7. How would you create a build directory and compile the C files using batch commands?
+                    sh 'usr/bin/gcc -o build_Output main.c math_operations.c'
                 }
             }
-        }*/
+        }
+
+        stage('Collect and Package Build Files') { 
+            steps {
+                script {
+                    // 8. How would you collect the hex file and store it in the folder created earlier?
+                    // 9. How would you zip the folder that contains the hex file?
+                    sh 'gzip /build_Output hex.zip'
+                }
+            }
+        }
+       
+        stage('Archiving Artifacts') {
+            steps {
+                    // 10. How would you archive the zip file?
+            }
+        }
     }
-
     post {
         always {
-            // Clean up, notifications, or any other post-build steps
-            echo "Cleaning up the workspace"
-            cleanWs()  // Optional: Clean up workspace after build
-        }
-        success {
-            echo "Build and deploy completed successfully!"
-        }
-        failure {
-            echo "Build failed, please check the logs"
-        }
+                // 11. How would you print out the list of submodules and the last commit?
+                sh 'pwd'
+                sh 'ls -ltrah'
+                git commit 
+        } 
     }
+
 }
