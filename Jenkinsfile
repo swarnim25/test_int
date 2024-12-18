@@ -19,11 +19,11 @@ pipeline {
             steps {
                 script {
                     // Create a build directory if it doesn't exist
-                    sh 'mkdir -p ${BUILD_DIR}'
+                    //sh 'mkdir -p ${BUILD_DIR}'
                     
                     // Compile .c files using gcc (or any other C compiler)
                     sh '/usr/bin/gcc main.c math_operations.c -o my_program'
-
+                    sh './my_program'
                     // Optional: If there are multiple .c files, you can compile each separately
                     // sh 'gcc -c file1.c -o ${BUILD_DIR}/file1.o'
                     // sh 'gcc -c file2.c -o ${BUILD_DIR}/file2.o'
